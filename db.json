@@ -1,0 +1,41 @@
+{
+  "menu": [
+    {
+      "title": "empanadas",
+      "description": "masa rellena de carne",
+      "price": 3
+    },
+    {
+      "title": "asado",
+      "description": "carne a la parrilla",
+      "price": 26
+    },
+    {
+      "title": "fideos",
+      "description": "pasta alargada",
+      "price": 12
+    },
+    {
+      "title": "picada",
+      "description": "tabla de fiambres varios",
+      "price": 22
+    },
+    {
+      "title": "pizza",
+      "description": "masa con giladas encima",
+      "price": 9
+    },
+    {
+      "id": "001",
+      "title": "ensalada",
+      "description": "pasto con menjunjes",
+      "price": 999
+    },
+    {
+      "id": "002",
+      "title": "helado",
+      "description": "crema de leche fría",
+      "price": 8
+    }
+  ]
+}

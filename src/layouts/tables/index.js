@@ -28,13 +28,32 @@ import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 
 // Data
-import authorsTableData from "layouts/tables/data/authorsTableData";
-import projectsTableData from "layouts/tables/data/projectsTableData";
+// import authorsTableData from "layouts/tables/data/authorsTableData";
+// import projectsTableData from "layouts/tables/data/projectsTableData";
+import useFetch from "react-fetch-hook";
+
 
 function Tables() {
-  const { columns, rows } = authorsTableData();
-  const { columns: pColumns, rows: pRows } = projectsTableData();
-
+  const { isLoading, data, error } = useFetch("http://localhost:3001/menu");
+  const table = {
+    columns: [
+      { Header: "Título", accessor: "title", width: "45%", align: "left" },
+      { Header: "descripción", accessor: "description", align: "left" },
+      { Header: "precio", accessor: "price", align: "center" },
+    ],
+    rows: [],
+  }
+  
+  if(error){
+    table.rows = [{title: "Error al cargar datos"}];
+  }
+  else if(isLoading){
+    table.rows = [{title: "Cargando..."}];
+  }
+  else{
+    table.rows = data;
+  }
+  
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -53,44 +72,17 @@ function Tables() {
                 coloredShadow="info"
               >
                 <MDTypography variant="h6" color="white">
-                  Authors Table
+                  Menú
                 </MDTypography>
               </MDBox>
               <MDBox pt={3}>
                 <DataTable
-                  table={{ columns, rows }}
-                  isSorted={false}
-                  entriesPerPage={false}
-                  showTotalEntries={false}
-                  noEndBorder
-                />
-              </MDBox>
-            </Card>
-          </Grid>
-          <Grid item xs={12}>
-            <Card>
-              <MDBox
-                mx={2}
-                mt={-3}
-                py={3}
-                px={2}
-                variant="gradient"
-                bgColor="info"
-                borderRadius="lg"
-                coloredShadow="info"
-              >
-                <MDTypography variant="h6" color="white">
-                  Projects Table
-                </MDTypography>
-              </MDBox>
-              <MDBox pt={3}>
-                <DataTable
-                  table={{ columns: pColumns, rows: pRows }}
-                  isSorted={false}
-                  entriesPerPage={false}
-                  showTotalEntries={false}
-                  noEndBorder
-                />
+                    table={table}
+                    isSorted={false}
+                    entriesPerPage={false}
+                    showTotalEntries={false}
+                    noEndBorder
+                    />
               </MDBox>
             </Card>
           </Grid>
