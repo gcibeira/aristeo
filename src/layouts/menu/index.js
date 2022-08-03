@@ -26,117 +26,82 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 
 // Dashboard components
-import DefaultProjectCard from "examples/Cards/ProjectCards/DefaultProjectCard";
+import Card from "@mui/material/Card";
+import SimpleBlogCard from "examples/Cards/BlogCards/SimpleBlogCard";
 
 // Images
 import pizza1 from "assets/images/pizza-1.jpeg";
 import pizza2 from "assets/images/pizza-2.jpg";
 import pizza3 from "assets/images/pizza-3.jpg";
-import pizza4 from "assets/images/pizza-4.jpg";
-import team1 from "assets/images/team-1.jpg";
-import team2 from "assets/images/team-2.jpg";
-import team3 from "assets/images/team-3.jpg";
-import team4 from "assets/images/team-4.jpg";
+// import pizza4 from "assets/images/pizza-4.jpg";
+
 
 function Menu() {
+  const menu = {
+    sections: [
+      {
+        title: "Pizzas",
+        items: [
+          {
+            title: "Margherita",
+            description: "Pizza con salsa de tomate, mozzarella y albahaca",
+            price: 10.0,
+            currency: "$",
+            image: pizza1,
+          },
+          {
+            title: "Napolitana",
+            description: "Pizza con queso y rodajas de tomate",
+            price: 12.0,
+            currency: "$",
+            image: pizza2,
+          },
+          {
+            title: "Tropical",
+            description: "La pizza con ananá!!",
+            price: 15.0,
+            currency: "$",
+            image: pizza3,
+          },
+        ],
+      },
+    ],
+  };
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <MDBox mb={2}>
-        <MDBox pt={2} px={2} lineHeight={1.25}>
-          <MDTypography variant="h6" fontWeight="medium">
-            Pizzas
-          </MDTypography>
-          <MDBox mb={1}>
-            <MDTypography variant="button" color="text">
-              Tradicionales
-            </MDTypography>
-          </MDBox>
-        </MDBox>
-        <MDBox p={2}>
-          <Grid container spacing={6}>
-            <Grid item xs={12} md={6}>
-              <DefaultProjectCard
-                image={pizza1}
-                label="Promo 1"
-                title="Margherita"
-                description="Salsa de tomate, queso muzzarella, albahaca y tomates cherries"
-                action={{
-                  type: "internal",
-                  route: "/pages/profile/profile-overview",
-                  color: "info",
-                  label: "agregar al pedido",
-                }}
-                authors={[
-                  { image: team1, name: "Elena Morison" },
-                  { image: team2, name: "Ryan Milly" },
-                  { image: team3, name: "Nick Daniel" },
-                  { image: team4, name: "Peterson" },
-                ]}
-              />
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <DefaultProjectCard
-                image={pizza2}
-                label="Promo 2"
-                title="Napolitana"
-                description="Mozzarella, salsa de tomate, rodajas de tomate y cebolla de verdeo"
-                action={{
-                  type: "internal",
-                  route: "/pages/profile/profile-overview",
-                  color: "info",
-                  label: "agregar al pedido",
-                }}
-                authors={[
-                  { image: team3, name: "Nick Daniel" },
-                  { image: team4, name: "Peterson" },
-                  { image: team1, name: "Elena Morison" },
-                  { image: team2, name: "Ryan Milly" },
-                ]}
-              />
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <DefaultProjectCard
-                image={pizza3}
-                label="Promo 3"
-                title="Tropical"
-                description="Queso, ananá y hongos"
-                action={{
-                  type: "internal",
-                  route: "/pages/profile/profile-overview",
-                  color: "info",
-                  label: "agregar al pedido",
-                }}
-                authors={[
-                  { image: team4, name: "Peterson" },
-                  { image: team3, name: "Nick Daniel" },
-                  { image: team2, name: "Ryan Milly" },
-                  { image: team1, name: "Elena Morison" },
-                ]}
-              />
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <DefaultProjectCard
-                image={pizza4}
-                label="Promo 4"
-                title="Mediterránea"
-                description="Salsa de tomate, queso, jamón crudo y rúcula"
-                action={{
-                  type: "internal",
-                  route: "/pages/profile/profile-overview",
-                  color: "info",
-                  label: "agregar al pedido",
-                }}
-                authors={[
-                  { image: team4, name: "Peterson" },
-                  { image: team3, name: "Nick Daniel" },
-                  { image: team2, name: "Ryan Milly" },
-                  { image: team1, name: "Elena Morison" },
-                ]}
-              />
-            </Grid>
-          </Grid>
-        </MDBox>
+      <MDBox display="flex" justifyContent="space-between" alignItems="center" p={1}>
+          {menu.sections.map( section => (
+            <Card color="primary" title="holaaaa">
+              <MDBox p={2}>
+                <MDTypography variant="h6" fontWeight="medium">
+                  {section.title}
+                </MDTypography>
+              </MDBox>
+              <Grid container spacing={6} p={2}>
+                {
+                  section.items.map( item =>
+                    (
+                      <Grid item key={item.title} xs={12} md={6}>
+                        <SimpleBlogCard
+                          image={item.image}
+                          title={item.title}
+                          description={item.description}
+                          action={{
+                            type: "internal",
+                            route: "#",
+                            color: "info",
+                            label: "Agregar al pedido"
+                          }}
+                        />
+                      </Grid>
+                    )
+                  )
+                }
+              </Grid>
+            </Card>
+          ))}
       </MDBox>
       <Footer />
     </DashboardLayout>
