@@ -39,8 +39,8 @@ import routes from "routes";
 import { useMaterialUIController, setMiniSidenav } from "context";
 
 // Images
-import brandWhite from "assets/images/logo-ct.png";
-import brandDark from "assets/images/logo-ct-dark.png";
+import brand from "assets/images/logo.png";
+import brandDark from "assets/images/logo-dark.png";
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -103,8 +103,8 @@ export default function App() {
         <>
           <Sidenav
             color={sidenavColor}
-            brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
-            brandName="Material Dashboard 2"
+            brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brand}
+            brandName="Tu Menú"
             routes={routes}
             onMouseEnter={handleOnMouseEnter}
             onMouseLeave={handleOnMouseLeave}

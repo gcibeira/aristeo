@@ -71,15 +71,15 @@ function Menu() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <MDBox display="flex" justifyContent="space-between" alignItems="center" p={1}>
+      <MDBox display="flex" justifyContent="space-between" alignItems="center">
           {menu.sections.map( section => (
-            <Card color="primary" title="holaaaa">
+            <Card key={section.title}>
               <MDBox p={2}>
                 <MDTypography variant="h6" fontWeight="medium">
                   {section.title}
                 </MDTypography>
               </MDBox>
-              <Grid container spacing={6} p={2}>
+              <Grid container spacing={4} p={2}>
                 {
                   section.items.map( item =>
                     (
