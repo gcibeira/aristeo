@@ -27,12 +27,12 @@ import Footer from "examples/Footer";
 
 // Dashboard components
 import Card from "@mui/material/Card";
-import SimpleBlogCard from "examples/Cards/BlogCards/SimpleBlogCard";
+import ProductCard from "examples/Cards/ProductCards/SimpleProductCard";
 
 // Images
-import pizza1 from "assets/images/pizza-1.jpeg";
-import pizza2 from "assets/images/pizza-2.jpg";
-import pizza3 from "assets/images/pizza-3.jpg";
+import img from "assets/images/default-image.png";
+// import img from "assets/images/pizza-2.jpg";
+// import pizza3 from "assets/images/pizza-3.jpg";
 // import pizza4 from "assets/images/pizza-4.jpg";
 
 
@@ -45,63 +45,69 @@ function Menu() {
           {
             title: "Margherita",
             description: "Pizza con salsa de tomate, mozzarella y albahaca",
+            oldPrice: 12.0,
             price: 10.0,
-            currency: "$",
-            image: pizza1,
+            currency: "€",
+            image: img,
           },
           {
             title: "Napolitana",
             description: "Pizza con queso y rodajas de tomate",
             price: 12.0,
-            currency: "$",
-            image: pizza2,
+            currency: "€",
+            image: img,
           },
           {
             title: "Tropical",
             description: "La pizza con ananá!!",
             price: 15.0,
-            currency: "$",
-            image: pizza3,
+            currency: "€",
+            image: img,
           },
         ],
       },
     ],
   };
 
+  const renderMenu = menu.sections.map((section) => (
+    <Card key={section.title}>
+      <MDBox p={2}>
+        <MDTypography variant="h6" fontWeight="medium">
+          {section.title}
+        </MDTypography>
+      </MDBox>
+      <Grid container spacing={4} p={2}>
+        {
+          section.items.map(({title, description, price, oldPrice, currency, image}) =>
+            (
+              <Grid item key={title} xs={12} md={6}>
+                <ProductCard
+                  image={image}
+                  title={title}
+                  description={description}
+                  oldPrice={oldPrice}
+                  price={price}
+                  currency={currency}
+                  action={{
+                    type: "internal",
+                    route: "#",
+                    color: "info",
+                    label: "Agregar al pedido"
+                  }}
+                />
+              </Grid>
+            )
+          )
+        }
+      </Grid>
+    </Card>
+  ));
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
       <MDBox display="flex" justifyContent="space-between" alignItems="center">
-          {menu.sections.map( section => (
-            <Card key={section.title}>
-              <MDBox p={2}>
-                <MDTypography variant="h6" fontWeight="medium">
-                  {section.title}
-                </MDTypography>
-              </MDBox>
-              <Grid container spacing={4} p={2}>
-                {
-                  section.items.map( item =>
-                    (
-                      <Grid item key={item.title} xs={12} md={6}>
-                        <SimpleBlogCard
-                          image={item.image}
-                          title={item.title}
-                          description={item.description}
-                          action={{
-                            type: "internal",
-                            route: "#",
-                            color: "info",
-                            label: "Agregar al pedido"
-                          }}
-                        />
-                      </Grid>
-                    )
-                  )
-                }
-              </Grid>
-            </Card>
-          ))}
+          {renderMenu}
       </MDBox>
       <Footer />
     </DashboardLayout>
