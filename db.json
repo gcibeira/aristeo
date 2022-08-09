@@ -1,41 +1,82 @@
 {
-  "menu": [
+  "menus": [
     {
-      "title": "empanadas",
-      "description": "masa rellena de carne",
-      "price": 3
+      "id": 1,
+      "owner": "Pizzeria Pepto",
+      "sections": [
+        {
+          "title": "Nuestras Pizzas",
+          "products": [
+            {
+              "id": 11,
+              "title": "Margherita",
+              "description": "Pizza con salsa de tomate, mozzarella y albahaca",
+              "oldPrice": 12.0,
+              "price": 10.0,
+              "currency": "€",
+              "image": "http://ricettafacile.it/wp-content/uploads/Pizza-Margherita-ricetta-originale.jpg"
+            },
+            {
+              "id": 12,
+              "title": "Napolitana",
+              "description": "Pizza con queso y rodajas de tomate",
+              "price": 12.0,
+              "currency": "€",
+              "image": "https://t2.rg.ltmcdn.com/es/posts/5/2/6/pizza_napolitana_32625_orig.jpg"
+            },
+            {
+              "id": 13,
+              "title": "Tropical",
+              "description": "La pizza con ananá!!",
+              "price": 15.0,
+              "currency": "€",
+              "image": "https://www.recetin.com/wp-content/uploads/2015/05/pizza_hawaiana.jpg"
+            }
+          ]
+        },
+        {
+          "title": "Bebidas",
+          "products": [
+            {
+              "id": 14,
+              "title": "Cola Cola",
+              "description": "Agua carbonatada con mucha azucar y gas",
+              "price": 2.0,
+              "currency": "€",
+              "image": "https://elranchodejonas.com/tienda/wp-content/uploads/sites/2/2020/08/COCACOLA.jpg"
+            },
+            {
+              "id": 15,
+              "title": "Agua",
+              "description": "dos moléculas de hidrógeno y una de oxígeno",
+              "price": 1.0,
+              "currency": "€",
+              "image": "https://thumbs.dreamstime.com/b/bottle-water-splash-23298413.jpg"
+            },
+            {
+              "id": 16,
+              "title": "Aperol Spritz",
+              "description": "Vino proseco, soda y Aperol",
+              "oldPrice" : 15.0,
+              "price": 12.0,
+              "currency": "€",
+              "image": "https://cdn.agrodolce.it/UrH8yq-dz33Ao2xVRTF_rjUMHWM=/1150x647/smart/https://www.agrodolce.it/app/uploads/2014/01/aperol-spritz-146.jpg"
+            }
+          ]
+        }
+      ]
     },
     {
-      "title": "asado",
-      "description": "carne a la parrilla",
-      "price": 26
-    },
+      "id": 2,
+      "owner": "Zitto",
+      "sections": []
+    }
+  ],
+
+  "orders": [
     {
-      "title": "fideos",
-      "description": "pasta alargada",
-      "price": 12
-    },
-    {
-      "title": "picada",
-      "description": "tabla de fiambres varios",
-      "price": 22
-    },
-    {
-      "title": "pizza",
-      "description": "masa con giladas encima",
-      "price": 9
-    },
-    {
-      "id": "001",
-      "title": "ensalada",
-      "description": "pasto con menjunjes",
-      "price": 999
-    },
-    {
-      "id": "002",
-      "title": "helado",
-      "description": "crema de leche fría",
-      "price": 8
+      "id": 1,
+      "products": []
     }
   ]
 }

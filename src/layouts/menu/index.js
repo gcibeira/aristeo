@@ -15,6 +15,8 @@ Coded by www.creative-tim.com
 
 // @mui material components
 import Grid from "@mui/material/Grid";
+import CircularProgress from '@mui/material/CircularProgress';
+import Alert from '@mui/material/Alert';
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
@@ -29,85 +31,60 @@ import Footer from "examples/Footer";
 import Card from "@mui/material/Card";
 import ProductCard from "examples/Cards/ProductCards/SimpleProductCard";
 
-// Images
-import img from "assets/images/default-image.png";
-// import img from "assets/images/pizza-2.jpg";
-// import pizza3 from "assets/images/pizza-3.jpg";
-// import pizza4 from "assets/images/pizza-4.jpg";
+// API
+import useFetch from "react-fetch-hook";
 
 
 function Menu() {
-  const menu = {
-    sections: [
-      {
-        title: "Pizzas",
-        items: [
-          {
-            title: "Margherita",
-            description: "Pizza con salsa de tomate, mozzarella y albahaca",
-            oldPrice: 12.0,
-            price: 10.0,
-            currency: "€",
-            image: img,
-          },
-          {
-            title: "Napolitana",
-            description: "Pizza con queso y rodajas de tomate",
-            price: 12.0,
-            currency: "€",
-            image: img,
-          },
-          {
-            title: "Tropical",
-            description: "La pizza con ananá!!",
-            price: 15.0,
-            currency: "€",
-            image: img,
-          },
-        ],
-      },
-    ],
-  };
+  const baseUrl = "http://localhost:3001/menus/1"
+  const { isLoading, data, error } = useFetch(baseUrl);
 
-  const renderMenu = menu.sections.map((section) => (
-    <Card key={section.title}>
-      <MDBox p={2}>
-        <MDTypography variant="h6" fontWeight="medium">
-          {section.title}
-        </MDTypography>
-      </MDBox>
-      <Grid container spacing={4} p={2}>
-        {
-          section.items.map(({title, description, price, oldPrice, currency, image}) =>
-            (
-              <Grid item key={title} xs={12} md={6}>
-                <ProductCard
-                  image={image}
-                  title={title}
-                  description={description}
-                  oldPrice={oldPrice}
-                  price={price}
-                  currency={currency}
-                  action={{
-                    type: "internal",
-                    route: "#",
-                    color: "info",
-                    label: "Agregar al pedido"
-                  }}
-                />
-              </Grid>
-            )
-          )
-        }
+  const renderMenu = menu => menu.sections.map((section) => (
+    <Grid key={section.title} container py={2} direction="column" justifyContent="center" alignItems="stretch">
+      <Grid item>
+        <Card>
+          <MDBox p={2}>
+            <MDTypography variant="h6" fontWeight="medium">
+              {section.title}
+            </MDTypography>
+          </MDBox>
+          <Grid container spacing={4} p={2}>
+            {
+              section.products.map(({title, description, price, oldPrice, currency, image}) =>
+                (
+                  <Grid item key={title} xs={12} md={4}>
+                    <ProductCard
+                      image={image}
+                      title={title}
+                      description={description}
+                      oldPrice={oldPrice}
+                      price={price}
+                      currency={currency}
+                      action={{
+                        type: "internal",
+                        route: "#",
+                        color: "info",
+                        label: "Agregar al pedido"
+                      }}
+                    />
+                  </Grid>
+                )
+              )
+            }
+          </Grid>
+        </Card>
       </Grid>
-    </Card>
+    </Grid>
   ));
+  
 
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <MDBox display="flex" justifyContent="space-between" alignItems="center">
-          {renderMenu}
+      <MDBox>
+        {isLoading && <CircularProgress color='info'/>}
+        {!isLoading && error && <Alert severity="error">Error al cargar el menú. Intenta recargar la página.</Alert>}
+        {!isLoading && data && renderMenu(data)}
       </MDBox>
       <Footer />
     </DashboardLayout>

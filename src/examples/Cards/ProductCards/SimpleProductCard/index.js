@@ -61,7 +61,7 @@ function ProductCard({ image, title, description, price, oldPrice, currency, act
         />
       </MDBox>
       <MDBox p={2}>
-        <MDTypography display="inline" variant="h5" textTransform="capitalize" fontWeight="bold">
+        <MDTypography display="inline" variant="h6" textTransform="capitalize" fontWeight="bold">
           {title}
         </MDTypography>
         <MDBox mt={1} mb={2}>
