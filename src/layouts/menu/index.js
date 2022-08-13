@@ -33,25 +33,30 @@ import ProductCard from "examples/Cards/ProductCards/SimpleProductCard";
 
 // API
 import useFetch from "react-fetch-hook";
-import {useState} from "react"
+import {
+  useShoppingCartController,
+  setCart,
+} from "context";
 
 
 function Menu() {
   const baseUrl = "http://localhost:3001/menus/1"
   const { isLoading, data, error } = useFetch(baseUrl);
-  const [cart, setCart] = useState([]);
+  const [controller, dispatch] = useShoppingCartController();
+  const { cart } = controller;
+  
 
   const addToCart = newProduct => {
     const exists = cart.find(product => product.id === newProduct.id);
     if(exists){
-      setCart(
+      setCart(dispatch,
         cart.map( product => 
           product.id === exists.id ? {...exists, quantity: exists.quantity+1} : product
         )
       )
     }
     else{
-      setCart([...cart, {...newProduct, quantity: 1}]);
+      setCart(dispatch,[...cart, {...newProduct, quantity: 1}]);
     }
     console.log(cart);
   }
@@ -90,8 +95,6 @@ function Menu() {
     <DashboardLayout>
       <DashboardNavbar />
       <MDBox>
-        {cart.map( item => <p>{item.title} {item.price} x {item.quantity} = {item.quantity*item.price}</p>)}
-        <p>Total = {cart.reduce( (total, item) => total + item.quantity * item.price, 0 )}</p>
         {isLoading && <CircularProgress color='info'/>}
         {!isLoading && error && <Alert severity="error">Error al cargar el menú. Intenta recargar la página.</Alert>}
         {!isLoading && data && renderMenu(data)}

@@ -17,17 +17,32 @@ Coded by www.creative-tim.com
 import Divider from "@mui/material/Divider";
 import Icon from "@mui/material/Icon";
 
-// prop-types is a library for typechecking of props
-import PropTypes from "prop-types";
-
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 
+// Custom styles for the Configurator
+import CartRoot from "examples/Cart/CartRoot";
 
-function Cart({handleCloseCart}) {
+// Material Dashboard 2 React context
+import {
+  useShoppingCartController,
+  setOpenCart,
+} from "context";
+
+function Cart() {
+  const [controller, dispatch] = useShoppingCartController();
+  const {
+    cart,
+    openCart,
+  } = controller;
+  const darkMode = false;
+
+  const handleCloseCart = () => setOpenCart(dispatch, false);
+
+
   return (
-    <>
+    <CartRoot variant="permanent" ownerState={{ openCart }}>
       <MDBox
         display="flex"
         justifyContent="space-between"
@@ -38,12 +53,15 @@ function Cart({handleCloseCart}) {
       >
         <MDBox>
           <MDTypography variant="h5">Tu pedido</MDTypography>
+          <MDTypography variant="body2" color="text">
+            See our dashboard options.
+          </MDTypography>
         </MDBox>
 
         <Icon
-          sx={({ typography: { size }, palette: { dark } }) => ({
+          sx={({ typography: { size }, palette: { dark, white } }) => ({
             fontSize: `${size.lg} !important`,
-            color: dark.main,
+            color: darkMode ? white.main : dark.main,
             stroke: "currentColor",
             strokeWidth: "2px",
             cursor: "pointer",
@@ -53,24 +71,20 @@ function Cart({handleCloseCart}) {
         >
           close
         </Icon>
+
+        
       </MDBox>
 
       <Divider />
 
       <MDBox pt={0.5} pb={3} px={3}>
         <MDBox>
-          <p>Producto A x Q</p>
-          <p>Producto B x Q</p>
-          <p>Producto C x Q</p>
-          <p>Producto D x Q</p>
+          {cart.map( item => <p>{item.title} {item.price} x {item.quantity} = {item.quantity*item.price}</p>)}
+          <p>Total = {cart.reduce( (total, item) => total + item.quantity * item.price, 0 )}</p>
         </MDBox>
       </MDBox>
-    </>
+    </CartRoot>
   );
 }
-
-Cart.propTypes = {
-  handleCloseCart: PropTypes.func.isRequired,
-};
 
 export default Cart;

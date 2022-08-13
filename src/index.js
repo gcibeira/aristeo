@@ -19,12 +19,14 @@ import { BrowserRouter } from "react-router-dom";
 import App from "App";
 
 // Material Dashboard 2 React Context Provider
-import { MaterialUIControllerProvider } from "context";
+import { MaterialUIControllerProvider, ShoppingCartControllerProvider } from "context";
 
 ReactDOM.render(
   <BrowserRouter>
     <MaterialUIControllerProvider>
-      <App />
+      <ShoppingCartControllerProvider>
+        <App />
+      </ShoppingCartControllerProvider>
     </MaterialUIControllerProvider>
   </BrowserRouter>,
   document.getElementById("root")

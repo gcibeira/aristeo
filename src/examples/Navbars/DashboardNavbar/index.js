@@ -35,7 +35,6 @@ import MDInput from "components/MDInput";
 // Material Dashboard 2 React example components
 import Breadcrumbs from "examples/Breadcrumbs";
 import NotificationItem from "examples/Items/NotificationItem";
-import Cart from "examples/Cart"
 
 // Custom styles for DashboardNavbar
 import {
@@ -52,14 +51,17 @@ import {
   setTransparentNavbar,
   setMiniSidenav,
   setOpenConfigurator,
+  useShoppingCartController,
+  setOpenCart,
 } from "context";
 
 function DashboardNavbar({ absolute, light, isMini }) {
   const [navbarType, setNavbarType] = useState();
   const [controller, dispatch] = useMaterialUIController();
   const { miniSidenav, transparentNavbar, fixedNavbar, openConfigurator, darkMode } = controller;
+  const [cartController, cartDispatch] = useShoppingCartController();
+  const { openCart } = cartController;
   const [openMenu, setOpenMenu] = useState(false);
-  const [openCart, setOpenCart] = useState(false);
   const route = useLocation().pathname.split("/").slice(1);
 
   useEffect(() => {
@@ -92,8 +94,10 @@ function DashboardNavbar({ absolute, light, isMini }) {
   const handleConfiguratorOpen = () => setOpenConfigurator(dispatch, !openConfigurator);
   const handleOpenMenu = (event) => setOpenMenu(event.currentTarget);
   const handleCloseMenu = () => setOpenMenu(false);
-  const handleCloseCart = () => setOpenCart(false);
-  const handleOpenCart = () => setOpenCart(true);
+  const handleCartOpen = () => {
+    setOpenCart(cartDispatch, !openCart);
+    console.log(openCart)
+  }
 
   // Render the notifications menu
   const renderMenu = () => (
@@ -173,7 +177,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
                 disableRipple
                 color="inherit"
                 sx={navbarIconButton}
-                onClick={handleOpenCart}
+                onClick={handleCartOpen}
               >
                 <Icon sx={iconsStyle}>shopping_cart</Icon>
               </IconButton>
@@ -190,7 +194,6 @@ function DashboardNavbar({ absolute, light, isMini }) {
                 <Icon sx={iconsStyle}>notifications</Icon>
               </IconButton>
               {renderMenu()}
-              {openCart && <Cart handleCloseCart={handleCloseCart} />}
             </MDBox>
           </MDBox>
         )}

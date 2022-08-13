@@ -25,9 +25,11 @@ import PropTypes from "prop-types";
 
 // Material Dashboard 2 React main context
 const MaterialUI = createContext();
+const ShoppingCart = createContext();
 
 // Setting custom name for the context which is visible on react dev tools
 MaterialUI.displayName = "MaterialUIContext";
+ShoppingCart.displayName = "ShoppingCartContext"
 
 // Material Dashboard 2 React reducer
 function reducer(state, action) {
@@ -68,6 +70,21 @@ function reducer(state, action) {
   }
 }
 
+// Material Dashboard 2 React reducer
+function ShoppingCartReducer(state, action) {
+  switch (action.type) {
+    case "CART": {
+      return { ...state, cart: action.value };
+    }
+    case "OPEN_CART": {
+      return { ...state, openCart: action.value };
+    }
+    default: {
+      throw new Error(`Unhandled action type: ${action.type}`);
+    }
+  }
+}
+
 // Material Dashboard 2 React context provider
 function MaterialUIControllerProvider({ children }) {
   const initialState = {
@@ -90,6 +107,20 @@ function MaterialUIControllerProvider({ children }) {
   return <MaterialUI.Provider value={value}>{children}</MaterialUI.Provider>;
 }
 
+// Material Dashboard 2 React context provider
+function ShoppingCartControllerProvider({ children }) {
+  const initialState = {
+    cart: [],
+    openCart: false,
+  };
+
+  const [controller, dispatch] = useReducer(ShoppingCartReducer, initialState);
+
+  const value = useMemo(() => [controller, dispatch], [controller, dispatch]);
+
+  return <ShoppingCart.Provider value={value}>{children}</ShoppingCart.Provider>;
+}
+
 // Material Dashboard 2 React custom hook for using context
 function useMaterialUIController() {
   const context = useContext(MaterialUI);
@@ -103,8 +134,26 @@ function useMaterialUIController() {
   return context;
 }
 
+// Material Dashboard 2 React custom hook for using context
+function useShoppingCartController() {
+  const context = useContext(ShoppingCart);
+
+  if (!context) {
+    throw new Error(
+      "useShoppingCartController should be used inside the ShoppingCartControllerProvider."
+    );
+  }
+
+  return context;
+}
+
 // Typechecking props for the MaterialUIControllerProvider
 MaterialUIControllerProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
+// Typechecking props for the MaterialUIControllerProvider
+ShoppingCartControllerProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
@@ -120,6 +169,10 @@ const setDirection = (dispatch, value) => dispatch({ type: "DIRECTION", value })
 const setLayout = (dispatch, value) => dispatch({ type: "LAYOUT", value });
 const setDarkMode = (dispatch, value) => dispatch({ type: "DARKMODE", value });
 
+const setCart = (dispatch, value) => dispatch({ type: "CART", value });
+const setOpenCart = (dispatch, value) => dispatch({ type: "OPEN_CART", value });
+
+
 export {
   MaterialUIControllerProvider,
   useMaterialUIController,
@@ -133,4 +186,8 @@ export {
   setDirection,
   setLayout,
   setDarkMode,
+  ShoppingCartControllerProvider,
+  useShoppingCartController,
+  setCart,
+  setOpenCart,
 };
