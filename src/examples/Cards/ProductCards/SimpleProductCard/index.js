@@ -13,15 +13,12 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-// react-router components
-import { Link } from "react-router-dom";
 
 // prop-types is a library for typechecking of props
 import PropTypes from "prop-types";
 
 // @mui material components
 import Card from "@mui/material/Card";
-import MuiLink from "@mui/material/Link";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
@@ -29,7 +26,9 @@ import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
 
 
-function ProductCard({ image, title, description, price, oldPrice, currency, action }) {
+function ProductCard({ product, onClick }) {
+  const {title, description, oldPrice, price, currency, image} = product;
+
   return (
     <Card>
       <MDBox position="relative" borderRadius="lg" mt={-2} mx={1}>
@@ -77,48 +76,24 @@ function ProductCard({ image, title, description, price, oldPrice, currency, act
             {`${price}${currency}`}
           </MDTypography>
         </MDBox>
-        {action.type === "external" ? (
-          <MuiLink href={action.route} target="_blank" rel="noreferrer">
-            <MDButton color={action.color ? action.color : "dark"}>{action.label}</MDButton>
-          </MuiLink>
-        ) : (
-          <Link to={action.route}>
-            <MDButton color={action.color ? action.color : "dark"}>{action.label}</MDButton>
-          </Link>
-        )}
+        <MDButton onClick={() => onClick(product)} color="info">Agregar al pedido</MDButton>
       </MDBox>
     </Card>
   );
 }
 
 // Typechecking props for the ProductCard
-ProductCard.propTypes = {
-  image: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  oldPrice: PropTypes.number,
-  currency: PropTypes.string.isRequired,
-  action: PropTypes.shape({
-    type: PropTypes.oneOf(["external", "internal"]).isRequired,
-    route: PropTypes.string.isRequired,
-    color: PropTypes.oneOf([
-      "primary",
-      "secondary",
-      "info",
-      "success",
-      "warning",
-      "error",
-      "dark",
-      "light",
-      "default",
-    ]),
-    label: PropTypes.string.isRequired,
+ProductCard.propTypes = {  
+  product: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    oldPrice: PropTypes.number,
+    currency: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired,
   }).isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
-ProductCard.defaultProps = {
-  oldPrice: null,
-};
 
 export default ProductCard;

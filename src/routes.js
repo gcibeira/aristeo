@@ -38,7 +38,7 @@ Coded by www.creative-tim.com
 // Material Dashboard 2 React layouts
 import Dashboard from "layouts/dashboard";
 import Menu from "layouts/menu";
-// import Tables from "layouts/tables";
+import Orders from "layouts/orders";
 import Billing from "layouts/billing";
 import Notifications from "layouts/notifications";
 import Profile from "layouts/profile";
@@ -51,19 +51,27 @@ import Icon from "@mui/material/Icon";
 const routes = [
   {
     type: "collapse",
-    name: "Dashboard",
-    key: "dashboard",
-    icon: <Icon fontSize="small">dashboard</Icon>,
-    route: "/dashboard",
-    component: <Dashboard />,
-  },
-  {
-    type: "collapse",
     name: "Menu",
     key: "menu",
     icon: <Icon fontSize="small">restaurant</Icon>,
     route: "/menu",
     component: <Menu />,
+  },
+  {
+    type: "collapse",
+    name: "Mis pedidos",
+    key: "mis pedidos",
+    icon: <Icon fontSize="small">shopping_cart</Icon>,
+    route: "/orders",
+    component: <Orders />,
+  },
+  {
+    type: "collapse",
+    name: "Dashboard",
+    key: "dashboard",
+    icon: <Icon fontSize="small">dashboard</Icon>,
+    route: "/dashboard",
+    component: <Dashboard />,
   },
   {
     type: "collapse",

@@ -35,6 +35,7 @@ import MDInput from "components/MDInput";
 // Material Dashboard 2 React example components
 import Breadcrumbs from "examples/Breadcrumbs";
 import NotificationItem from "examples/Items/NotificationItem";
+import Cart from "examples/Cart"
 
 // Custom styles for DashboardNavbar
 import {
@@ -58,6 +59,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
   const [controller, dispatch] = useMaterialUIController();
   const { miniSidenav, transparentNavbar, fixedNavbar, openConfigurator, darkMode } = controller;
   const [openMenu, setOpenMenu] = useState(false);
+  const [openCart, setOpenCart] = useState(false);
   const route = useLocation().pathname.split("/").slice(1);
 
   useEffect(() => {
@@ -90,6 +92,8 @@ function DashboardNavbar({ absolute, light, isMini }) {
   const handleConfiguratorOpen = () => setOpenConfigurator(dispatch, !openConfigurator);
   const handleOpenMenu = (event) => setOpenMenu(event.currentTarget);
   const handleCloseMenu = () => setOpenMenu(false);
+  const handleCloseCart = () => setOpenCart(false);
+  const handleOpenCart = () => setOpenCart(true);
 
   // Render the notifications menu
   const renderMenu = () => (
@@ -169,6 +173,15 @@ function DashboardNavbar({ absolute, light, isMini }) {
                 disableRipple
                 color="inherit"
                 sx={navbarIconButton}
+                onClick={handleOpenCart}
+              >
+                <Icon sx={iconsStyle}>shopping_cart</Icon>
+              </IconButton>
+              <IconButton
+                size="small"
+                disableRipple
+                color="inherit"
+                sx={navbarIconButton}
                 aria-controls="notification-menu"
                 aria-haspopup="true"
                 variant="contained"
@@ -177,6 +190,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
                 <Icon sx={iconsStyle}>notifications</Icon>
               </IconButton>
               {renderMenu()}
+              {openCart && <Cart handleCloseCart={handleCloseCart} />}
             </MDBox>
           </MDBox>
         )}

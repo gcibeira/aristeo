@@ -76,6 +76,7 @@
   "orders": [
     {
       "id": 1,
+      "status": "created",
       "products": []
     }
   ]

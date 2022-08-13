@@ -27,14 +27,12 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 
-// Data
-// import authorsTableData from "layouts/tables/data/authorsTableData";
-// import projectsTableData from "layouts/tables/data/projectsTableData";
+// API
 import useFetch from "react-fetch-hook";
 
 
-function Tables() {
-  const { isLoading, data, error } = useFetch("http://localhost:3001/menu");
+function Orders() {
+  const { isLoading, data, error } = useFetch("http://localhost:3001/ordenes");
   const table = {
     columns: [
       { Header: "Título", accessor: "title", width: "45%", align: "left" },
@@ -93,4 +91,4 @@ function Tables() {
   );
 }
 
-export default Tables;
+export default Orders;
