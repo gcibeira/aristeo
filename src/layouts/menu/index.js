@@ -58,7 +58,6 @@ function Menu() {
     else{
       setCart(dispatch,[...cart, {...newProduct, quantity: 1}]);
     }
-    console.log(cart);
   }
 
 

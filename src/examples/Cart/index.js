@@ -23,11 +23,13 @@ import MDTypography from "components/MDTypography";
 
 // Custom styles for the Configurator
 import CartRoot from "examples/Cart/CartRoot";
+import CartProductList from "examples/Lists/CartProductList";
 
 // Material Dashboard 2 React context
 import {
   useShoppingCartController,
   setOpenCart,
+  setCart,
 } from "context";
 
 function Cart() {
@@ -40,7 +42,30 @@ function Cart() {
 
   const handleCloseCart = () => setOpenCart(dispatch, false);
 
+  const removeProduct = id => {
+    setCart(dispatch,
+      cart.filter( product => 
+        (product.id !== id)
+      )
+    )
+  }
 
+  const incrementProduct = id => {
+    setCart(dispatch,
+      cart.map( product =>
+        product.id === id ? {...product, quantity: product.quantity+1} : product
+      )
+    )
+  }
+
+  const decrementProduct = id => {
+    setCart(dispatch,
+      cart.map( product => 
+        product.id === id ? {...product, quantity: product.quantity-1} : product
+      )
+    )
+  }
+  
   return (
     <CartRoot variant="permanent" ownerState={{ openCart }}>
       <MDBox
@@ -54,7 +79,7 @@ function Cart() {
         <MDBox>
           <MDTypography variant="h5">Tu pedido</MDTypography>
           <MDTypography variant="body2" color="text">
-            See our dashboard options.
+            pedido #305827
           </MDTypography>
         </MDBox>
 
@@ -79,8 +104,7 @@ function Cart() {
 
       <MDBox pt={0.5} pb={3} px={3}>
         <MDBox>
-          {cart.map( item => <p>{item.title} {item.price} x {item.quantity} = {item.quantity*item.price}</p>)}
-          <p>Total = {cart.reduce( (total, item) => total + item.quantity * item.price, 0 )}</p>
+          <CartProductList cart={cart} removeProduct={removeProduct} incrementProduct={incrementProduct} decrementProduct={decrementProduct} />
         </MDBox>
       </MDBox>
     </CartRoot>

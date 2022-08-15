@@ -27,10 +27,10 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import Icon from "@mui/material/Icon";
+import Badge from "@mui/material/Badge";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
-import MDInput from "components/MDInput";
 
 // Material Dashboard 2 React example components
 import Breadcrumbs from "examples/Breadcrumbs";
@@ -60,7 +60,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
   const [controller, dispatch] = useMaterialUIController();
   const { miniSidenav, transparentNavbar, fixedNavbar, openConfigurator, darkMode } = controller;
   const [cartController, cartDispatch] = useShoppingCartController();
-  const { openCart } = cartController;
+  const { cart, openCart } = cartController;
   const [openMenu, setOpenMenu] = useState(false);
   const route = useLocation().pathname.split("/").slice(1);
 
@@ -94,10 +94,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
   const handleConfiguratorOpen = () => setOpenConfigurator(dispatch, !openConfigurator);
   const handleOpenMenu = (event) => setOpenMenu(event.currentTarget);
   const handleCloseMenu = () => setOpenMenu(false);
-  const handleCartOpen = () => {
-    setOpenCart(cartDispatch, !openCart);
-    console.log(openCart)
-  }
+  const handleCartOpen = () => setOpenCart(cartDispatch, !openCart);
 
   // Render the notifications menu
   const renderMenu = () => (
@@ -143,26 +140,23 @@ function DashboardNavbar({ absolute, light, isMini }) {
         </MDBox>
         {isMini ? null : (
           <MDBox sx={(theme) => navbarRow(theme, { isMini })}>
-            <MDBox pr={1}>
-              <MDInput label="Search here" />
-            </MDBox>
+            <IconButton
+              size="small"
+              disableRipple
+              color="inherit"
+              sx={navbarMobileMenu}
+              onClick={handleMiniSidenav}
+            >
+              <Icon sx={iconsStyle} fontSize="medium">
+                {miniSidenav ? "menu" : "menu_open"}
+              </Icon>
+            </IconButton>
             <MDBox color={light ? "white" : "inherit"}>
               <Link to="/authentication/sign-in/basic">
                 <IconButton sx={navbarIconButton} size="small" disableRipple>
                   <Icon sx={iconsStyle}>account_circle</Icon>
                 </IconButton>
               </Link>
-              <IconButton
-                size="small"
-                disableRipple
-                color="inherit"
-                sx={navbarMobileMenu}
-                onClick={handleMiniSidenav}
-              >
-                <Icon sx={iconsStyle} fontSize="medium">
-                  {miniSidenav ? "menu_open" : "menu"}
-                </Icon>
-              </IconButton>
               <IconButton
                 size="small"
                 disableRipple
@@ -179,7 +173,9 @@ function DashboardNavbar({ absolute, light, isMini }) {
                 sx={navbarIconButton}
                 onClick={handleCartOpen}
               >
-                <Icon sx={iconsStyle}>shopping_cart</Icon>
+                <Badge badgeContent={cart.length} color="info">
+                  <Icon sx={iconsStyle}>shopping_cart</Icon>
+                </Badge>
               </IconButton>
               <IconButton
                 size="small"
