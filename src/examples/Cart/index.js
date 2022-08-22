@@ -29,42 +29,13 @@ import CartProductList from "examples/Lists/CartProductList";
 import {
   useShoppingCartController,
   setOpenCart,
-  setCart,
-} from "context";
+} from "context/ShoppingCartContext";
 
 function Cart() {
   const [controller, dispatch] = useShoppingCartController();
-  const {
-    cart,
-    openCart,
-  } = controller;
+  const { openCart } = controller;
   const darkMode = false;
 
-  const handleCloseCart = () => setOpenCart(dispatch, false);
-
-  const removeProduct = id => {
-    setCart(dispatch,
-      cart.filter( product => 
-        (product.id !== id)
-      )
-    )
-  }
-
-  const incrementProduct = id => {
-    setCart(dispatch,
-      cart.map( product =>
-        product.id === id ? {...product, quantity: product.quantity+1} : product
-      )
-    )
-  }
-
-  const decrementProduct = id => {
-    setCart(dispatch,
-      cart.map( product => 
-        product.id === id ? {...product, quantity: product.quantity-1} : product
-      )
-    )
-  }
   
   return (
     <CartRoot variant="permanent" ownerState={{ openCart }}>
@@ -92,7 +63,7 @@ function Cart() {
             cursor: "pointer",
             transform: "translateY(5px)",
           })}
-          onClick={handleCloseCart}
+          onClick={() => setOpenCart(dispatch, false)}
         >
           close
         </Icon>
@@ -104,7 +75,7 @@ function Cart() {
 
       <MDBox pt={0.5} pb={3} px={3}>
         <MDBox>
-          <CartProductList cart={cart} removeProduct={removeProduct} incrementProduct={incrementProduct} decrementProduct={decrementProduct} />
+          <CartProductList />
         </MDBox>
       </MDBox>
     </CartRoot>

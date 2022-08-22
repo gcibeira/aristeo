@@ -51,9 +51,12 @@ import {
   setTransparentNavbar,
   setMiniSidenav,
   setOpenConfigurator,
+} from "context/MaterialUIContext";
+
+import {
   useShoppingCartController,
   setOpenCart,
-} from "context";
+} from "context/ShoppingCartContext";
 
 function DashboardNavbar({ absolute, light, isMini }) {
   const [navbarType, setNavbarType] = useState();

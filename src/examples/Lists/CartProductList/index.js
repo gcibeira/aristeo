@@ -14,10 +14,6 @@ Coded by www.creative-tim.com
 */
 
 
-// prop-types is a library for typechecking of props
-import PropTypes from "prop-types";
-
-
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
@@ -25,7 +21,16 @@ import MDButton from "components/MDButton";
 import MDAvatar from "components/MDAvatar";
 import Icon from "@mui/material/Icon";
 
-function CartProductList({ cart, removeProduct, incrementProduct, decrementProduct }) {
+import {
+  useShoppingCartController,
+  incrementProduct,
+  decrementProduct,
+  removeProduct,
+} from "context/ShoppingCartContext";
+
+function CartProductList() {
+  const [controller, dispatch] = useShoppingCartController();
+  const { cart } = controller;
   const renderItems = cart.length?
   (
     cart.map(({ id, image, title, quantity, price, currency }) => (
@@ -42,13 +47,13 @@ function CartProductList({ cart, removeProduct, incrementProduct, decrementProdu
           </MDTypography>
         </MDBox>
         <MDBox ml="auto">
-          <MDButton onClick={() => incrementProduct(id)} variant="text" color="success" iconOnly>
+          <MDButton onClick={() => incrementProduct(dispatch, id)} variant="text" color="success" iconOnly>
               +
           </MDButton>
-          <MDButton onClick={() => decrementProduct(id)} variant="text" color="error" iconOnly>
+          <MDButton onClick={() => decrementProduct(dispatch, id)} variant="text" color="error" iconOnly>
               -
           </MDButton>
-          <MDButton onClick={() => removeProduct(id)} variant="text" color="error" iconOnly>
+          <MDButton onClick={() => removeProduct(dispatch, id)} variant="text" color="error" iconOnly>
               <Icon>delete</Icon>
           </MDButton>
         </MDBox>
@@ -66,20 +71,5 @@ function CartProductList({ cart, removeProduct, incrementProduct, decrementProdu
     </MDBox>
   );
 }
-
-// Typechecking props for the ProductCard
-CartProductList.propTypes = {
-  cart: PropTypes.arrayOf(PropTypes.object).isRequired,
-  removeProduct: PropTypes.func,
-  incrementProduct: PropTypes.func,
-  decrementProduct: PropTypes.func,
-};
-
-CartProductList.defaultProps = {
-  removeProduct: null,
-  incrementProduct: null,
-  decrementProduct: null,
-}
-
 
 export default CartProductList;

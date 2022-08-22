@@ -33,7 +33,7 @@ import ProductCard from "examples/Cards/ProductCards/SimpleProductCard";
 
 // API
 import useFetch from "react-fetch-hook";
-import { useShoppingCartController, setCart} from "context";
+import { useShoppingCartController, setCart} from "context/ShoppingCartContext";
 
 
 function Menu() {

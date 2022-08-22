@@ -37,7 +37,7 @@ import themeDark from "assets/theme-dark";
 import routes from "routes";
 
 // Material Dashboard 2 React contexts
-import { useMaterialUIController, setMiniSidenav } from "context";
+import { useMaterialUIController, setMiniSidenav } from "context/MaterialUIContext";
 
 // Images
 import brand from "assets/images/logo.png";

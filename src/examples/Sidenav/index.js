@@ -42,7 +42,7 @@ import sidenavLogoLabel from "examples/Sidenav/styles/sidenav";
 import {
   useMaterialUIController,
   setMiniSidenav,
-} from "context";
+} from "context/MaterialUIContext";
 
 function Sidenav({ color, brand, brandName, routes, ...rest }) {
   const [controller, dispatch] = useMaterialUIController();
