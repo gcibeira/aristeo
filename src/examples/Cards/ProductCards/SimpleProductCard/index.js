@@ -24,10 +24,24 @@ import Card from "@mui/material/Card";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
+import ButtonGroup from '@mui/material/ButtonGroup';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
 
+import {
+  useShoppingCartController,
+  addProduct,
+  incrementProduct,
+  decrementProduct,
+  removeProduct,
+} from "context/ShoppingCartContext";
 
-function ProductCard({ product, onClick }) {
-  const {title, description, oldPrice, price, currency, image} = product;
+function ProductCard({ product }) {
+  const { id, title, description, oldPrice, price, currency, image } = product;
+  const [controller, dispatch] = useShoppingCartController();
+  const { cart } = controller;
+
+  const isInCart = cart.find(item => item.id === id);
 
   return (
     <Card>
@@ -70,21 +84,41 @@ function ProductCard({ product, onClick }) {
         </MDBox>
         <MDBox mt={1} mb={2}>
           <MDTypography variant="body1" component="p">
-            {oldPrice && <MDTypography variant="body1" component="span" color="error" style={{ textDecoration : 'line-through'}}>
+            {oldPrice && <MDTypography variant="body1" component="span" color="error" style={{ textDecoration: 'line-through' }}>
               {`${oldPrice}${currency} `}
             </MDTypography>}
             {`${price}${currency}`}
           </MDTypography>
         </MDBox>
-        <MDButton onClick={() => onClick(product)} color="info">Agregar al pedido</MDButton>
+        {isInCart ?
+          <ButtonGroup size="small" variant="contained">
+            <IconButton onClick={() => decrementProduct(dispatch, id)} size="small">
+              -
+            </IconButton>
+            <IconButton size="small">
+              <MDTypography variant="button">
+                {isInCart.quantity}
+              </MDTypography>
+            </IconButton>
+            <IconButton onClick={() => incrementProduct(dispatch, id)} size="small">
+              +
+            </IconButton>
+            <IconButton onClick={() => removeProduct(dispatch, id)} color="error" size="small">
+              <DeleteIcon />
+            </IconButton>
+          </ButtonGroup>
+          :
+          <MDButton size="small" onClick={() => addProduct(dispatch, product)} color="info">Agregar al pedido</MDButton>
+        }
       </MDBox>
     </Card>
   );
 }
 
 // Typechecking props for the ProductCard
-ProductCard.propTypes = {  
+ProductCard.propTypes = {
   product: PropTypes.shape({
+    id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
@@ -92,7 +126,6 @@ ProductCard.propTypes = {
     currency: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,
   }).isRequired,
-  onClick: PropTypes.func.isRequired,
 };
 
 

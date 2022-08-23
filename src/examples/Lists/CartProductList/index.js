@@ -17,9 +17,10 @@ Coded by www.creative-tim.com
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
-import MDButton from "components/MDButton";
+import ButtonGroup from '@mui/material/ButtonGroup';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
 import MDAvatar from "components/MDAvatar";
-import Icon from "@mui/material/Icon";
 
 import {
   useShoppingCartController,
@@ -28,42 +29,48 @@ import {
   removeProduct,
 } from "context/ShoppingCartContext";
 
+
 function CartProductList() {
   const [controller, dispatch] = useShoppingCartController();
   const { cart } = controller;
-  const renderItems = cart.length?
-  (
-    cart.map(({ id, image, title, quantity, price, currency }) => (
-      <MDBox key={id} component="li" display="flex" alignItems="center" py={1} mb={1}>
-        <MDBox mr={2}>
-          <MDAvatar size="md" src={image} alt={title} shadow="md"/>
-        </MDBox>
-        <MDBox display="flex" flexDirection="column" alignItems="flex-start" justifyContent="center">
-          <MDTypography variant="button" fontWeight="medium">
-            {`${quantity} x ${title}`}
-          </MDTypography>
-          <MDTypography variant="caption" color="text">
-          {`${quantity*price}${currency}`}
-          </MDTypography>
-        </MDBox>
-        <MDBox ml="auto">
-          <MDButton onClick={() => incrementProduct(dispatch, id)} variant="text" color="success" iconOnly>
-              +
-          </MDButton>
-          <MDButton onClick={() => decrementProduct(dispatch, id)} variant="text" color="error" iconOnly>
+  const renderItems = cart.length ?
+    (
+      cart.map(({ id, image, title, quantity, price, currency }) => (
+        <MDBox key={id} component="li" display="flex" alignItems="center" py={1} mb={1}>
+          <MDBox mr={2}>
+            <MDAvatar size="md" src={image} alt={title} shadow="md" />
+          </MDBox>
+          <MDBox display="flex" sx={{ flexGrow: 1 }} flexDirection="column" alignItems="flex-start" justifyContent="center">
+            <MDTypography variant="button" fontWeight="medium">
+              {`${title}`}
+            </MDTypography>
+            <MDTypography variant="caption" color="text">
+              {`${quantity * price}${currency}`}
+            </MDTypography>
+          </MDBox>
+          <ButtonGroup size="small" variant="contained">
+            <IconButton onClick={() => decrementProduct(dispatch, id)} size="small">
               -
-          </MDButton>
-          <MDButton onClick={() => removeProduct(dispatch, id)} variant="text" color="error" iconOnly>
-              <Icon>delete</Icon>
-          </MDButton>
+            </IconButton>
+            <IconButton size="small">
+              <MDTypography variant="button">
+                {quantity}
+              </MDTypography>
+            </IconButton>
+            <IconButton onClick={() => incrementProduct(dispatch, id)} size="small">
+              +
+            </IconButton>
+            <IconButton onClick={() => removeProduct(dispatch, id)} color="error" size="small">
+              <DeleteIcon />
+            </IconButton>
+          </ButtonGroup>
         </MDBox>
-      </MDBox>
-    ))
-  ):(
-    <MDTypography variant="body2" color="text" justifyContent="center">
-      Tu carta está vacía
-    </MDTypography>
-  )
+      ))
+    ) : (
+      <MDTypography variant="body2" color="text" justifyContent="center">
+        Tu carrito está vacío
+      </MDTypography>
+    )
 
   return (
     <MDBox component="ul" display="flex" flexDirection="column" p={0} m={0}>

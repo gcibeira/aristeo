@@ -33,10 +33,10 @@ import {
 
 function Cart() {
   const [controller, dispatch] = useShoppingCartController();
-  const { openCart } = controller;
+  const { openCart, cart } = controller;
   const darkMode = false;
+  const totalPrice = cart.reduce((total, item) => (total + item.price * item.quantity),0)
 
-  
   return (
     <CartRoot variant="permanent" ownerState={{ openCart }}>
       <MDBox
@@ -68,7 +68,7 @@ function Cart() {
           close
         </Icon>
 
-        
+
       </MDBox>
 
       <Divider />
@@ -78,6 +78,8 @@ function Cart() {
           <CartProductList />
         </MDBox>
       </MDBox>
+      <Divider />
+      <MDTypography variant="h5">Total = {totalPrice}</MDTypography>
     </CartRoot>
   );
 }

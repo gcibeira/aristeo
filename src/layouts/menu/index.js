@@ -33,30 +33,10 @@ import ProductCard from "examples/Cards/ProductCards/SimpleProductCard";
 
 // API
 import useFetch from "react-fetch-hook";
-import { useShoppingCartController, setCart} from "context/ShoppingCartContext";
-
 
 function Menu() {
   const baseUrl = "http://localhost:3001/menus/1"
   const { isLoading, data, error } = useFetch(baseUrl);
-  const [controller, dispatch] = useShoppingCartController();
-  const { cart } = controller;
-  
-
-  const addToCart = newProduct => {
-    const exists = cart.find(product => product.id === newProduct.id);
-    if(exists){
-      setCart(dispatch,
-        cart.map( product => 
-          product.id === exists.id ? {...exists, quantity: exists.quantity+1} : product
-        )
-      )
-    }
-    else{
-      setCart(dispatch,[...cart, {...newProduct, quantity: 1}]);
-    }
-  }
-
 
   const renderMenu = menu => menu.sections.map((section) => (
     <Grid key={section.title} container py={2} direction="column" justifyContent="center" alignItems="stretch">
@@ -74,7 +54,6 @@ function Menu() {
                   <Grid item key={product.id} xs={12} md={4}>
                     <ProductCard
                       product={product}
-                      onClick={addToCart}
                     />
                   </Grid>
                 )
