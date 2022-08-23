@@ -30,10 +30,23 @@ function ShoppingCartReducer(state, action) {
         ...state,
         cart: state.cart.flatMap(
           product => {
-            if(product.id !== action.value) return product;
+            if (product.id !== action.value) return product;
             return (product.quantity > 1 ? { ...product, quantity: product.quantity - 1 } : [])
           })
       };
+    }
+    case "ADD_PRODUCT": {
+      const exists = state.cart.find(product => product.id === action.value.id);
+      if (exists) {
+        return (
+          {...state, cart: state.cart.map(product =>
+            product.id === exists.id ? { ...product, quantity: product.quantity + 1 } : product
+          )}
+        )
+      }
+      return (
+        { ...state, cart: [...state.cart, { ...action.value, quantity: 1 }] }
+      )
     }
     case "REMOVE_PRODUCT": {
       return {
@@ -88,13 +101,15 @@ const setCart = (dispatch, value) => dispatch({ type: "UPDATE_CART", value });
 const incrementProduct = (dispatch, value) => dispatch({ type: "INCREMENT_PRODUCT", value });
 const decrementProduct = (dispatch, value) => dispatch({ type: "DECREMENT_PRODUCT", value });
 const removeProduct = (dispatch, value) => dispatch({ type: "REMOVE_PRODUCT", value });
+const addProduct = (dispatch, value) => dispatch({ type: "ADD_PRODUCT", value });
 
 export {
-ShoppingCartControllerProvider,
-useShoppingCartController,
-setOpenCart,
-setCart,
-incrementProduct,
-decrementProduct,
-removeProduct,
+  ShoppingCartControllerProvider,
+  useShoppingCartController,
+  setOpenCart,
+  setCart,
+  incrementProduct,
+  decrementProduct,
+  removeProduct,
+  addProduct,
 };
