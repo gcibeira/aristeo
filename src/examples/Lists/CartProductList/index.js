@@ -33,9 +33,10 @@ import {
 function CartProductList() {
   const [controller, dispatch] = useShoppingCartController();
   const { cart } = controller;
-  const renderItems = cart.length ?
-    (
-      cart.map(({ id, image, title, quantity, price, currency }) => (
+
+  return (
+    <MDBox component="ul" display="flex" flexDirection="column" p={0} m={0}>
+      {cart.map(({ id, image, title, quantity, price, currency }) => (
         <MDBox key={id} component="li" display="flex" alignItems="center" py={1} mb={1}>
           <MDBox mr={2}>
             <MDAvatar size="md" src={image} alt={title} shadow="md" />
@@ -65,16 +66,7 @@ function CartProductList() {
             </IconButton>
           </ButtonGroup>
         </MDBox>
-      ))
-    ) : (
-      <MDTypography variant="body2" color="text" justifyContent="center">
-        Tu carrito está vacío
-      </MDTypography>
-    )
-
-  return (
-    <MDBox component="ul" display="flex" flexDirection="column" p={0} m={0}>
-      {renderItems}
+      ))}
     </MDBox>
   );
 }

@@ -52,9 +52,7 @@ function Menu() {
               section.products.map(product =>
                 (
                   <Grid item key={product.id} xs={12} md={4}>
-                    <ProductCard
-                      product={product}
-                    />
+                    <ProductCard product={{...product, "currency": menu.currency}} />
                   </Grid>
                 )
               )
@@ -70,9 +68,12 @@ function Menu() {
     <DashboardLayout>
       <DashboardNavbar />
       <MDBox>
-        {isLoading && <CircularProgress color='info'/>}
-        {!isLoading && error && <Alert severity="error">Error al cargar el menú. Intenta recargar la página.</Alert>}
-        {!isLoading && data && renderMenu(data)}
+        {isLoading ? <CircularProgress color='info'/> :
+          <>
+            {error && <Alert severity="error">Error al cargar el menú. Intenta recargar la página.</Alert>}
+            {data && renderMenu(data)}
+          </>
+        }
       </MDBox>
       <Footer />
     </DashboardLayout>
