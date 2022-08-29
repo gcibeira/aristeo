@@ -1,4 +1,11 @@
 {
+  "users": [
+    {
+      "email": "gera@gmail.com",
+      "password": "$2a$10$evNZmxf/Wx2ToSjkKlMNLe8ahQ24kbntmKQODNhGHaBJQpkRdPcpm",
+      "id": 1
+    }
+  ],
   "menus": [
     {
       "id": 1,

@@ -78,6 +78,7 @@
     "eslint-plugin-react": "7.28.0",
     "eslint-plugin-react-hooks": "4.3.0",
     "json-server": "^0.17.0",
+    "json-server-auth": "^2.1.0",
     "prettier": "2.5.1"
   }
 }
