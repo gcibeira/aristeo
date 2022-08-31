@@ -20,14 +20,14 @@ import App from "App";
 
 // Material Dashboard 2 React Context Provider
 import { MaterialUIControllerProvider } from "context/MaterialUIContext";
-import { ShoppingCartControllerProvider } from "context/ShoppingCartContext";
+import { ShoppingCartProvider } from "context/ShoppingCartContext";
 
 ReactDOM.render(
   <BrowserRouter>
     <MaterialUIControllerProvider>
-      <ShoppingCartControllerProvider>
+      <ShoppingCartProvider>
         <App />
-      </ShoppingCartControllerProvider>
+      </ShoppingCartProvider>
     </MaterialUIControllerProvider>
   </BrowserRouter>,
   document.getElementById("root")

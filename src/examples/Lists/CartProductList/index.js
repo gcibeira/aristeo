@@ -23,7 +23,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import MDAvatar from "components/MDAvatar";
 
 import {
-  useShoppingCartController,
+  useShoppingCart,
   incrementProduct,
   decrementProduct,
   removeProduct,
@@ -31,7 +31,7 @@ import {
 
 
 function CartProductList() {
-  const [controller, dispatch] = useShoppingCartController();
+  const [controller, dispatch] = useShoppingCart();
   const { cart } = controller;
 
   return (

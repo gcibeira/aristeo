@@ -29,7 +29,7 @@ import CartProductList from "examples/Lists/CartProductList";
 
 // Material Dashboard 2 React context
 import {
-  useShoppingCartController,
+  useShoppingCart,
   setOpenCart,
   setCart,
 } from "context/ShoppingCartContext";
@@ -43,7 +43,7 @@ const baseUrl = "http://localhost:3001/orders"
 function Cart() {
   const [successSB, setSuccessSB] = useState(false);
   const [errorSB, setErrorSB] = useState(false);
-  const [controller, dispatch] = useShoppingCartController();
+  const [controller, dispatch] = useShoppingCart();
   const { openCart, cart } = controller;
   const totalPrice = cart.reduce((total, item) => (total + item.price * item.quantity), 0)
 

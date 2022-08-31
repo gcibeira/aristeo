@@ -98,6 +98,9 @@ const routes = [
     component: <Profile />,
   },
   {
+    type: "divider",
+  },
+  {
     type: "collapse",
     name: "Sign In",
     key: "sign-in",

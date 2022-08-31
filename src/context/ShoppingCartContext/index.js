@@ -62,7 +62,7 @@ function ShoppingCartReducer(state, action) {
 }
 
 // Shopping Cart context provider
-function ShoppingCartControllerProvider({ children }) {
+function ShoppingCartProvider({ children }) {
   const initialState = {
     cart: [],
     openCart: false,
@@ -77,12 +77,12 @@ function ShoppingCartControllerProvider({ children }) {
 
 
 // Shopping Cart custom hook for using context
-function useShoppingCartController() {
+function useShoppingCart() {
   const context = useContext(ShoppingCart);
 
   if (!context) {
     throw new Error(
-      "useShoppingCartController should be used inside the ShoppingCartControllerProvider."
+      "useShoppingCart should be used inside the ShoppingCartControllerProvider."
     );
   }
 
@@ -91,7 +91,7 @@ function useShoppingCartController() {
 
 
 // Typechecking props for the ShoppingCartControllerProvider
-ShoppingCartControllerProvider.propTypes = {
+ShoppingCartProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
@@ -104,8 +104,8 @@ const removeProduct = (dispatch, value) => dispatch({ type: "REMOVE_PRODUCT", va
 const addProduct = (dispatch, value) => dispatch({ type: "ADD_PRODUCT", value });
 
 export {
-  ShoppingCartControllerProvider,
-  useShoppingCartController,
+  ShoppingCartProvider,
+  useShoppingCart,
   setOpenCart,
   setCart,
   incrementProduct,

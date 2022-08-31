@@ -29,7 +29,7 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import {
-  useShoppingCartController,
+  useShoppingCart,
   addProduct,
   incrementProduct,
   decrementProduct,
@@ -38,7 +38,7 @@ import {
 
 function ProductCard({ product }) {
   const { id, title, description, oldPrice, price, currency, image } = product;
-  const [controller, dispatch] = useShoppingCartController();
+  const [controller, dispatch] = useShoppingCart();
   const { cart } = controller;
 
   const isInCart = cart.find(item => item.id === id);

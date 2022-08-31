@@ -54,7 +54,7 @@ import {
 } from "context/MaterialUIContext";
 
 import {
-  useShoppingCartController,
+  useShoppingCart,
   setOpenCart,
 } from "context/ShoppingCartContext";
 
@@ -62,7 +62,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
   const [navbarType, setNavbarType] = useState();
   const [controller, dispatch] = useMaterialUIController();
   const { miniSidenav, transparentNavbar, fixedNavbar, openConfigurator, darkMode } = controller;
-  const [cartController, cartDispatch] = useShoppingCartController();
+  const [cartController, cartDispatch] = useShoppingCart();
   const { cart, openCart } = cartController;
   const [openMenu, setOpenMenu] = useState(false);
   const route = useLocation().pathname.split("/").slice(1);
